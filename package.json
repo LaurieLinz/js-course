@@ -1,0 +1,36 @@
+{
+  "name": "js-course",
+  "version": "0.1.0",
+  "description": "JavaScript Course",
+  "keywords": [],
+  "homepage": "",
+  "author": {
+    "name": "Mike Whitfield",
+    "email": "mike_whitfield@outlook.com",
+    "url": "http://mikewhitfield.org"
+  },
+  "contributors": [
+    {
+      "name": "Laurie Linz",
+      "email": "lalinz303@gmail.com"
+    }
+  ],
+  "dependencies": {
+    "express": "^4.15.2",
+    "request": "^2.81.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/michaelgwhitfield/javascript3030.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "coveralls": "~2.11.8",
+    "eslint": "~3.13.*",
+    "istanbul": "~0.4.2",
+    "jasmine": "^2.5.2",
+    "jsdoc": "~3.4.0",
+    "rimraf": "~2.5.2"
+  },
+  "scripts": {}
+}

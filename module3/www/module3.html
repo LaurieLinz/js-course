@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="icon" href="/img/js.png">
+        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+        <style>
+        </style>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h2 class="navbar navbar-brand"></h2>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="">
+                        <a onclick="$hashRouter.change({'page': 'week5-6'});">Overview</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Readings<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="frontend.displayModule('module3/readings/3.1-classes_as_containers.js');">3.1 -- Classes as Containers</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.2-this_variable.js');">3.2 -- &lsquo;this&rsquo; Variable</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.3-node-fs.js');">3.3 -- Node FS</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.4-json.js');">3.4 -- JSON</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.5-setTimeout_setInterval.js');">3.5 -- &lsquo;setTimeout&rsquo;, &lsquo;setInterval&rsquo;</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.6-bind_apply_call.js');">3.6 -- &lsquo;bind&rsquo;, &lsquo;apply&rsquo;, &lsquo;call&rsquo;</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.7-network_requests.js');">3.7 -- Network Requests</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.8-callbacks_and_promises.js');">3.8 -- Callbacks and Promises</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.9-classes_as_templates.js');">3.9 -- Classes as Templates</a></li>
+                            <li><a onclick="frontend.displayModule('module3/readings/3.10-classes_as_inheritable.js');">3.10 -- Classes as Inheritable</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Assignments<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="frontend.displayModule('module3/assignments/a3.1-tanks-static.js');">3.1a -- Tanks (static)</a></li>
+                            <li><a onclick="frontend.displayModule('module3/assignments/a3.2-shapes.js');">3.2a -- Shapes</a></li>
+                            <li><a onclick="frontend.displayModule('module3/assignments/a3.3-tanks.js');">3.3a -- Tanks</a></li>
+                            <li><a onclick="frontend.displayModule('module3/assignments/a3.4-redistribute-by-subject.js');">3.4a -- Redistribute by Subject</a></li>
+                            <li><a onclick="frontend.displayModule('module3/assignments/a3.5-image-search.js');">3.5a -- Image Search</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a onclick="$hashRouter.change({'page': 'sandbox'});">Editor</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="content">
+            <iframe></iframe>
+            <div></div>
+        </section>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+        <script src="bower_components/HashRouter/hashrouter.class.js"></script>
+        <script src="frontend.class.js"></script>
+        <script src="editor.class.js"></script>
+        <script src="component.class.js"></script>
+        <script src="modulefrontend.class.js"></script>
+        <script>
+        var frontend = new ModuleFrontend();
+        $hashRouter.change({'page': 'week5-6'});
+        </script>
+    </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="icon" href="/img/js.png">
+        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+        <style>
+        </style>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h2 class="navbar navbar-brand"><a onclick="$('.content>iframe').attr('src', 'http://mikewhitfield.org/teaching');"><img src="img/js.png" / ></a></h2>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">JavaScript Modules<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="$hashRouter.change({'page': 'module1'});">Module 1 -- Variables, Data Types and Exceptions</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'module2'});">Module 2 -- Data and Control Structures</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'module3'});">Module 3 -- Object Oriented and Asynchronous Programming</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Frontend Modules<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="$hashRouter.change({'page': 'module1'});">Frontend 1 -- Basic HTML to Intermediate CSS</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'module2'});">Frontend 2 -- Frontend Application Theory</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Node Modules<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="$hashRouter.change({'page': 'module1'});">Node Module 1 -- Routing and Basic State</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'module2'});">Node Module 2 -- Selected Topics</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Quizzes<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="$hashRouter.change({'page': 'quiz1'});">Quiz 1 -- Variables and Data Types</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'quiz2'});">Quiz 2 -- Data and Control Structures</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Projects<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="$hashRouter.change({'page': 'gitpush'});">Git Push</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'bookstore'});">Book Store</a></li>
+                            <li><a onclick="$hashRouter.change({'page': 'imagedownloader'});">Image Downloader</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="content">
+            <iframe></iframe>
+            <div></div>
+        </section>
+        <script src="bower_components/HashRouter/hashrouter.class.js"></script>
+        <script src="component.class.js"></script>
+        <script src="frontend.class.js"></script>
+        <script>
+        new Frontend();
+        Frontend.instance.changePage('http://mikewhitfield.org/teaching');
+        </script>
+    </body>
+</html>

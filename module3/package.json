@@ -1,0 +1,33 @@
+{
+  "name": "js-course",
+  "version": "0.1.0",
+  "description": "",
+  "keywords": [],
+  "homepage": "",
+  "author": {
+    "name": "Mike Whitfield",
+    "url": "http://mikewhitfield.org"
+  },
+  "dependencies": {
+    "express": "^4.15.2",
+    "node-games": "^3.0.3",
+    "request": "^2.81.0",
+    "rimraf": "^2.5.4",
+    "spirittests": "^0.3.23"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "coveralls": "~2.11.8",
+    "eslint": "~3.13.*",
+    "istanbul": "~0.4.2",
+    "jasmine": "^2.5.2",
+    "jsdoc": "~3.4.0",
+    "rimraf": "~2.5.2"
+  },
+  "scripts": {
+  }
+}

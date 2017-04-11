@@ -1,0 +1,40 @@
+body, html {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+h2.navbar {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 8px;
+    padding-top: 8px;
+}
+h2 img {
+    height: 32px;
+}
+nav.navbar {
+    margin-bottom: 0px;
+}
+.navbar-brand>img {
+    height: 32px;
+    margin: 0px;
+    padding: 0px;
+    padding-right: 1em;
+    position: relative;
+}
+.content>iframe {
+    border: 0px;
+    height: auto;
+    min-height: 200px;
+    width: 100%;
+}
+.content>div {
+    padding-top: 10em;
+    position: relative;
+    top: 50px;
+}
+.navbar-inverse {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}

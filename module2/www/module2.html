@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="icon" href="/img/js.png">
+        <link rel="stylesheet" href="https://bootswatch.com/cosmo/bootstrap.min.css" crossorigin="anonymous">
+
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.js"></script>
+        <style>
+        </style>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <h2 class="navbar navbar-brand"></h2>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="">
+                        <a onclick="$hashRouter.change({'page': 'week3-4'});">Overview</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Readings<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="frontend.displayModule('module2/readings/2.1-arrays.js');">2.1 -- Arrays</a></li>
+                            <li><a onclick="frontend.displayModule('module2/readings/2.2-object.js');">2.2 -- Objects</a></li>
+                            <li><a onclick="frontend.displayModule('module2/readings/2.3-conditionals.js');">2.3 -- Conditionals</a></li>
+                            <li><a onclick="frontend.displayModule('module2/readings/2.4-loops.js');">2.4 -- Loops</a></li>
+                            <li><a onclick="frontend.displayModule('module2/readings/2.5-functions.js');">2.5 -- Functions</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Assignments<span class="caret"></span><span class="sr-only">(current)</span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a onclick="frontend.displayModule('module2/assignments/a2.1-simplify.js');">2.1a -- Simplify Object</a></li>
+                        </ul>
+                    </li>
+                    <li class="">
+                        <a onclick="$hashRouter.change({'page': 'sandbox'});">Editor</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="content">
+            <iframe></iframe>
+            <div></div>
+        </section>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js"></script>
+        <script src="bower_components/HashRouter/hashrouter.class.js"></script>
+        <script src="frontend.class.js"></script>
+        <script src="editor.class.js"></script>
+        <script src="component.class.js"></script>
+        <script src="modulefrontend.class.js"></script>
+        <script>
+        var frontend = new ModuleFrontend();
+        $hashRouter.change({'page': 'week3-4'});
+        </script>
+    </body>
+</html>
