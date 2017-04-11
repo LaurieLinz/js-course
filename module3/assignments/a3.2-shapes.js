@@ -5,6 +5,9 @@
  * more practice with JavaScript's Math library.
  */
 
+var Shape3D = require(__dirname + '/../readings/3.10-classes_as_inheritable.js')
+    .Shape3D;
+
 /**
  * @class
  */

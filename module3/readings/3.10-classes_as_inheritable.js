@@ -61,7 +61,7 @@ class Square extends Shape {
  * Defines a box, which has a width, height and depth.
  * @class
  */
-class Box extends Square3D {
+class Box extends Shape3D {
     /**
      * @param {Number} width The width of the box.
      * @param {Number} height The height of the box.
@@ -99,3 +99,8 @@ class Box extends Square3D {
         return this.volume;
     }
 }
+
+module.exports = {
+    Shape: Shape,
+    Shape3D: Shape3D
+};

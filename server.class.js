@@ -32,6 +32,23 @@ class Server {
             res.send(require('fs').readFileSync(__dirname + '/' + 
                 req.path.substr('/readings/'.length), 'utf8'));
         });
+        
+        this.app.all('/run/*', function(req, res, next) {
+            var file = req.path.substr('/run/'.length);
+            var log = __dirname + '/' + file.replace(/\\/g, '/')
+                .replace(/\//g, '_') + '.log';
+            var ws = require('fs').createWriteStream(log);
+            process.stdout.write = process.stderr.write = ws.write.bind(ws);
+            require(__dirname + '/' + file);
+            var rs = require('fs').createReadStream(log);
+            res.set('etag', (new Date()).getTime());
+            rs.on('data', function(data) {
+                res.write(data);
+            });
+            rs.on('end', function() {
+                res.end();
+            });
+        });
     }
 
     /**
