@@ -29,7 +29,6 @@ nav.navbar {
     width: 100%;
 }
 .content>div {
-    padding-top: 10em;
     position: relative;
     top: 50px;
 }

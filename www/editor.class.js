@@ -11,7 +11,7 @@ class AceEditor {
         }
         this.component = new Component('ace-editor', elem, 'editor.html');
         this.component.initialized.then((el) => {
-            this.editor = ace.edit(elem);
+            this.editor = ace.edit(elem.querySelector('.editor'));
             this.editor.setTheme("ace/theme/twilight");
             this.editor.setOptions({
                 maxLines: Infinity,

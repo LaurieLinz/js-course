@@ -28,6 +28,7 @@ class Frontend {
         try {this.editor.remove();} catch(e) {console.log(e);}
         $('.content>iframe').css('display', 'none').attr('src', '');
         $('.content>div').css('height', 'auto').css('width', '100%');
+        $('.content>div>*').remove();
         $('.content>div').removeAttr('hidden');
         $('body').css('overflow-y', 'auto');
         this.editor = new AceEditor($('.content>div').get(0), file);
