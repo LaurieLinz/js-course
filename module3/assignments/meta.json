@@ -1,0 +1,6 @@
+{
+    "a3.2-shapes.js": {
+        "test": "module3/t3.2-shapes.js",
+        "target": "node"
+    }
+}

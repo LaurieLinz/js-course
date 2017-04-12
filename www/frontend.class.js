@@ -32,7 +32,7 @@ class Frontend {
         $('.content>div').removeAttr('hidden');
         $('body').css('overflow-y', 'auto');
         this.editor = new AceEditor($('.content>div').get(0), file);
-        this.editor.component.initialized.then(() => {
+        this.editor.initialized.then(() => {
             $('body').css('height', $(document.body).height() + 'px');
         });
     }

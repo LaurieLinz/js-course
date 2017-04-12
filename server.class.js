@@ -27,6 +27,19 @@ class Server {
         this.app.use(this.express.static(__dirname + '/module3/frontend'));
         this.app.use(this.express.static(__dirname + '/module4/frontend'));
         this.app.use(this.express.static(__dirname + '/module5/frontend'));
+        
+        this.app.all('/meta/*', function(req, res, next) {
+            var path = req.path.substr('/meta/'.length);
+            var dirname = require('path').dirname(path);
+            var filename = require('path').basename(path);
+            if (require('fs').existsSync(dirname + '/meta.json')) {
+                res.send(require('fs').readFileSync(dirname + '/meta.json', 
+                    'utf8'));
+            }
+            else {
+                res.send('{}');
+            }
+        });
 
         this.app.all('/readings/*', function(req, res, next) {
             res.send(require('fs').readFileSync(__dirname + '/' + 
@@ -34,6 +47,7 @@ class Server {
         });
         
         this.app.all('/run/*', function(req, res, next) {
+            var status = '';
             var file = req.path.substr('/run/'.length);
             var log = __dirname + '/' + file.replace(/\\/g, '/')
                 .replace(/\//g, '_') + '.log';
@@ -48,6 +62,13 @@ class Server {
             rs.on('end', function() {
                 res.end();
             });
+            setTimeout(() => {
+                try {require('fs').unlinkSync(log);} catch(e) {}
+            }, 60000);
+        });
+        
+        this.app.all('/save/*', function(req, res, next) {
+            res.send('{}');
         });
     }
 
