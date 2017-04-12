@@ -10,10 +10,15 @@ class AceEditor extends Component {
             return;
         }
         super('ace-editor', elem, 'editor.html');
+
+        /** {Object} Meta information about the file. */
+        this.meta = {};
+
         /** {String} The filename to use. */
         this.src = src;
 
-        setInterval(this.saveContents.bind(this), 1000 * 2);
+        setInterval(this.saveContents.bind(this), 1000 * 10);
+        setInterval(this.run.bind(this), 1000 * 2);
     }
 
     /**
@@ -22,13 +27,19 @@ class AceEditor extends Component {
      */
     getMeta() {
         return new Promise((resolve, reject) => {
-            $.ajax({
-                url: '/meta/' + this.src,
-                success: function(s) {
-                    try {this.meta = JSON.parse(s);} catch(e) {}
-                    resolve(this.meta);
-                }
-            });
+            if (!this.lastMetaLookup) {
+                this.lastMetaLookup = this.src;
+            } else if (this.lastMetaLookup == this.src) {
+                resolve(this.meta);
+            } else {
+                $.ajax({
+                    url: '/meta/' + this.src,
+                    success: function(s) {
+                        try {this.meta = JSON.parse(s);} catch(e) {}
+                        resolve(this.meta);
+                    }
+                });
+            }
         });
     }
 
@@ -59,6 +70,24 @@ class AceEditor extends Component {
     }
 
     /**
+     * Runs the code.  If it's a Node context, sends to the server for
+     * processing.
+     */
+    run() {
+        this.getMeta().then(() => {
+            if (this.meta.hasOwnProperty('target') && 
+                this.meta.target == 'node') {
+                    this.model.outputFormatString = 
+                        'Outputting Node.js Execution';
+                } else {
+                    this.model.outputFormatString = 'Outputting as HTML';
+                    let value = this.editor.getValue().replace(/"/g, '\"');
+                    this.model.output = value;
+                }
+        });
+    }
+
+    /**
      * Saves the contents to the server.
      * @return {Promise} A promise that resolves with the filename the contents
      * saved to.
@@ -68,7 +97,7 @@ class AceEditor extends Component {
             $.ajax({
                 url: '/save/' + this.src,
                 success: (filename) => {
-                    this.lastSaved = (new Date()).getTime();
+                    this.lastSaved = (new Date()).toString();
                     this.model.lastSavedString = 'Last saved ' +
                         this.lastSaved.toString();
                     this.render();

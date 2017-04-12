@@ -5,12 +5,9 @@ function render(model, templateLiteral) {
     // declare the vars in function scope needed for our replacement
     for (let key in model) {
         let value;
-        if (typeof model[key] == 'string') {
-            value = '"' + model[key] + '"';
-        } else {
-            value = model[key];
-        }
-        eval('var ' + key + ' = ' + value + '; ');
+        value = model[key];
+        
+        eval('var ' + key + ' = value; ');
     }
     
     return eval('String.raw`' + templateLiteral + '`');
@@ -38,7 +35,7 @@ class Component {
 
         /** {Promise} The promise that resolves when the component file is loaded */
         this.initialized = Component.promises[name];
-        this.initialized.then(this.initialize.bind(this));
+        this.initialized.then(this.render.bind(this));
         
         /** {Object} The model to render the DOM with. */
         this.model = {};
@@ -118,7 +115,9 @@ class Component {
                 continue;
             } else if (element == 'br' || 
                 element == 'img' || 
-                element == 'link') {
+                element == 'link' || 
+                element == 'input' || 
+                element == 'meta') {
                 // get those self closers!  if we don't get them, this breaks everything!
                 continue;
             } else if (precedingElements[i] == closedElements[currentClosedElement]) {
@@ -206,6 +205,7 @@ class Component {
         }
 
         offsets = [];
+        let itr = 0;
         contents = contents.replace(/\$\{(.*)\}/g, function(match, p1, offset) {
             let isDirty = false;
             for (let dirtyVar of dirty) {
@@ -217,8 +217,9 @@ class Component {
                 }
             }
             if (isDirty) {
-                offsets.push(offset);
+                offsets.push(offset + itr * 25); // fixed! fragile!
             }
+            itr++;
             return '${eval("try {' + p1 + '} catch(e){\'\'}")}';
         });
 
@@ -228,7 +229,8 @@ class Component {
 
         if (!this.element) {
             this.element = document.createElement('div');
-            this.element.innerHTML = this.contents;
+            this.contents = contents;
+            this.element.innerHTML = render(this.model, this.contents);
             $(this.parent).append(this.element);
         } else {
             // update!
