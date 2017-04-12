@@ -42,18 +42,43 @@ class Server {
         });
 
         this.app.all('/readings/*', function(req, res, next) {
-            res.send(require('fs').readFileSync(__dirname + '/' + 
-                req.path.substr('/readings/'.length), 'utf8'));
+            var path = req.path.substr('/readings/'.length);
+            var dirname = require('path').dirname(path);
+            var filename = require('path').basename(path);
+                filename = filename.split('.');
+                filename.splice(-1, 0, 'modified');
+                filename = filename.join('.');
+            try {
+                if (require('fs').existsSync(dirname + '/' + 
+                    filename)) {
+                        res.send(require('fs').readFileSync(dirname + '/' + 
+                            filename, 'utf8'));
+                    } else {
+                        res.send(require('fs').readFileSync(__dirname + '/' + 
+                            path, 'utf8'));
+                    }
+            } catch(e) {
+                res.send('');
+            }
         });
         
         this.app.all('/run/*', function(req, res, next) {
             var status = '';
             var file = req.path.substr('/run/'.length);
+
+            // open the log file for writing
             var log = __dirname + '/' + file.replace(/\\/g, '/')
                 .replace(/\//g, '_') + '.log';
+            require('fs').writeFileSync(log, '');
             var ws = require('fs').createWriteStream(log);
+            let original = process.stdout.write;
             process.stdout.write = process.stderr.write = ws.write.bind(ws);
+
+            // run the file now
             require(__dirname + '/' + file);
+            
+            // begin the read
+            let sent = false;
             var rs = require('fs').createReadStream(log);
             res.set('etag', (new Date()).getTime());
             rs.on('data', function(data) {
@@ -61,14 +86,36 @@ class Server {
             });
             rs.on('end', function() {
                 res.end();
+                try {require('fs').unlinkSync(log);} catch(e) {console.log(e);}
+                try {ws.end();} catch(e) {console.log(e);}
+                process.stdout.write = process.stderr.write = original;
+                sent = true;
             });
             setTimeout(() => {
-                try {require('fs').unlinkSync(log);} catch(e) {}
+                if (!sent) {
+                    rs.pause();
+                    ws.end();
+                    res.send();
+                    try {require('fs').unlinkSync(log);} catch(e) {}
+                }
             }, 60000);
         });
         
-        this.app.all('/save/*', function(req, res, next) {
-            res.send('{}');
+        this.app.post('/save/*', function(req, res, next) {
+            var path = req.path.substr('/save/'.length);
+            var dirname = require('path').dirname(path);
+            var filename = require('path').basename(path);
+            let data = '';
+            req.on('data', function(datum) {
+                data += datum;
+            });
+            req.on('end', function() {
+                filename = filename.split('.');
+                filename.splice(-1, 0, 'modified');
+                filename = filename.join('.');
+                require('fs').writeFileSync(dirname + '/' + filename, data);
+                res.send();
+            });
         });
     }
 

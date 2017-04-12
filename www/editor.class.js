@@ -27,16 +27,15 @@ class AceEditor extends Component {
      */
     getMeta() {
         return new Promise((resolve, reject) => {
-            if (!this.lastMetaLookup) {
-                this.lastMetaLookup = this.src;
-            } else if (this.lastMetaLookup == this.src) {
-                resolve(this.meta);
+            if (this.lastMetaLookup && this.lastMetaLookup == this.src) {
+                resolve(this.meta[this.src.split('/').slice(-1)]);
             } else {
+                this.lastMetaLookup = this.src;
                 $.ajax({
                     url: '/meta/' + this.src,
-                    success: function(s) {
-                        try {this.meta = JSON.parse(s);} catch(e) {}
-                        resolve(this.meta);
+                    success: (meta) => {
+                        try {this.meta = JSON.parse(meta);} catch(e) {console.log(e)}
+                        resolve(this.meta[this.src.split('/').slice(-1)]);
                     }
                 });
             }
@@ -59,6 +58,8 @@ class AceEditor extends Component {
             this.editorContents.length == 0)) {
             this.setSrc(this.src);
         }
+
+        this.setupEvents();
     }
 
     /**
@@ -74,15 +75,30 @@ class AceEditor extends Component {
      * processing.
      */
     run() {
-        this.getMeta().then(() => {
-            if (this.meta.hasOwnProperty('target') && 
-                this.meta.target == 'node') {
-                    this.model.outputFormatString = 
-                        'Outputting Node.js Execution';
+        this.getMeta().then((meta) => {
+            if (meta && meta.hasOwnProperty('target') && 
+                meta.target == 'node') {
+                    if (!this.runPromise) {
+                        this.runPromise = new Promise((resolve, reject) => {
+                            $.ajax({
+                                url: '/run/' + this.src,
+                                success: function(results) {
+                                    resolve(results);
+                                }
+                            });
+                        }).then((results) => {
+                            this.model.outputFormatString = 
+                                'Outputting Node.js Execution';
+                            this.model.output = results;
+                            this.runPromise = null;
+                            this.render();
+                        });
+                    }
                 } else {
                     this.model.outputFormatString = 'Outputting as HTML';
                     let value = this.editor.getValue().replace(/"/g, '\"');
                     this.model.output = value;
+                    this.render();
                 }
         });
     }
@@ -96,6 +112,8 @@ class AceEditor extends Component {
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: '/save/' + this.src,
+                data: this.editor.getValue(),
+                method: 'post',
                 success: (filename) => {
                     this.lastSaved = (new Date()).toString();
                     this.model.lastSavedString = 'Last saved ' +
@@ -125,5 +143,14 @@ class AceEditor extends Component {
                 }
             });
         });
+    }
+
+    /**
+     * Sets up events for this particular component.
+     */
+    setupEvents() {
+        this.find('.save').click(function() {
+            this.saveContents();
+        }.bind(this))
     }
 }
