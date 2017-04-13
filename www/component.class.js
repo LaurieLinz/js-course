@@ -44,6 +44,16 @@ class Component {
     }
 
     /**
+     * Retruns the results of a jQuery for the context of this component.
+     * @param {String} query The query to run in context of this component.
+     * @returns {jQuery} Returns the jQuery for the supplied query in context of
+     * this component.
+     */
+    find(query) {
+        return $(this.element).find(query);
+    }
+
+    /**
      * The default initialization function.  The component is constructed with
      * the new DOM node.
      */

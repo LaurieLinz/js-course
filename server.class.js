@@ -62,10 +62,33 @@ class Server {
             }
         });
         
+        this.app.all('/reset/*', function(req, res, next) {
+            var path = req.path.substr('/reset/'.length);
+            var dirname = require('path').dirname(path);
+            var filename = require('path').basename(path);
+                filename = filename.split('.');
+                filename.splice(-1, 0, 'modified');
+                filename = filename.join('.');
+            try {
+                if (require('fs').existsSync(__dirname + '/' + dirname + '/' + 
+                    filename)) {
+                        require('fs').unlinkSync(__dirname + '/' + dirname + 
+                            '/' + filename);
+                    } else {
+                        console.info('An error: file not found?');
+                    }
+                res.send();
+            } catch(e) {
+                res.send('');
+            }
+        });
+        
         this.app.all('/run/*', function(req, res, next) {
+            res.send('Node runner is being worked on.  Check back soon.');
+            return;
+            // TODO:
             var status = '';
             var file = req.path.substr('/run/'.length);
-
             // open the log file for writing
             var log = __dirname + '/' + file.replace(/\\/g, '/')
                 .replace(/\//g, '_') + '.log';

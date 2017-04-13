@@ -17,8 +17,10 @@ class AceEditor extends Component {
         /** {String} The filename to use. */
         this.src = src;
 
-        setInterval(this.saveContents.bind(this), 1000 * 10);
-        setInterval(this.run.bind(this), 1000 * 2);
+        this.intervals = [];
+        this.intervals.push(setInterval(this.saveContents.bind(this), 
+            1000 * 10));
+        this.intervals.push(setInterval(this.run.bind(this), 1000 * 2));
     }
 
     /**
@@ -66,6 +68,9 @@ class AceEditor extends Component {
      * Removes the code editor.
      */
     remove() {
+        for (let itv of this.intervals) {
+            clearInterval(itv);
+        }
         super.remove();
         this.editor.destroy();
     }
@@ -151,6 +156,16 @@ class AceEditor extends Component {
     setupEvents() {
         this.find('.save').click(function() {
             this.saveContents();
-        }.bind(this))
+        }.bind(this));
+        this.find('.reset').click(function() {
+            console.log('clicky');
+            $.ajax({
+                url: '/reset/' + this.src,
+                success: () => {
+                    console.log('should be reset');
+                    this.setSrc(this.src);
+                }
+            })
+        }.bind(this));
     }
 }
